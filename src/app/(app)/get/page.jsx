@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 
 export default function OutcomeForm() {
   const [outcomeDescription, setOutcomeDescription] = useState("");
-  const [outcomeCategory, setOutcomeCategory] = useState("groceries");
+  const [outcomeCategory, setOutcomeCategory] = useState("fuel");
   const [outcomeAmount, setOutcomeAmount] = useState("");
-  const [outcomeType, setOutcomeType] = useState("expense");
+  const [outcomeType, setOutcomeType] = useState("upi");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -41,9 +41,9 @@ export default function OutcomeForm() {
         setIsLoading(false);
         setIsSubmitted(true);
         setOutcomeDescription("");
-        setOutcomeCategory("groceries");
+        setOutcomeCategory("fuel");
         setOutcomeAmount("");
-        setOutcomeType("expense");
+        setOutcomeType("upi");
       } else {
         console.error("Failed to submit outcome data");
         setIsLoading(false);
@@ -70,21 +70,7 @@ export default function OutcomeForm() {
             <h2 className="text-center text-3xl font-extrabold text-gray-900">Submit Outcome</h2>
             <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
               <div className="rounded-md shadow-sm -space-y-px">
-                <div>
-                  <label htmlFor="outcomeDescription" className="sr-only">
-                    Outcome Description
-                  </label>
-                  <input
-                    id="outcomeDescription"
-                    name="outcomeDescription"
-                    type="text"
-                    value={outcomeDescription}
-                    onChange={(e) => setOutcomeDescription(e.target.value)}
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Outcome Description"
-                  />
-                </div>
+                
                 <div>
                   <label htmlFor="outcomeCategory" className="sr-only">
                     Outcome Category
@@ -96,10 +82,16 @@ export default function OutcomeForm() {
                     onChange={(e) => setOutcomeCategory(e.target.value)}
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   >
-                    <option value="groceries">Groceries</option>
-                    <option value="rent">Rent</option>
-                    <option value="utilities">Utilities</option>
-                    <option value="entertainment">Entertainment</option>
+                    <option value="fuel">Fuel</option>
+                    <option value="food">Food</option>
+                    <option value="drink">Drink</option>
+                    <option value="car">Car</option>
+                    <option value="movie">Movie</option>
+                    <option value="grocery">Grocery</option>
+                    <option value="friend">Friend</option>
+                    <option value="emi">EMI</option>
+                    <option value="invest">Invest</option>
+                    <option value="cash">Cash</option>
                   </select>
                 </div>
                 <div>
@@ -132,6 +124,21 @@ export default function OutcomeForm() {
                     <option value="upi">UPI</option>
                     <option value="cash">Cash</option>
                   </select>
+                </div>
+                <div>
+                  <label htmlFor="outcomeDescription" className="sr-only">
+                    Outcome Description
+                  </label>
+                  <input
+                    id="outcomeDescription"
+                    name="outcomeDescription"
+                    type="text"
+                    value={outcomeDescription}
+                    onChange={(e) => setOutcomeDescription(e.target.value)}
+                    required
+                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    placeholder="Outcome Description"
+                  />
                 </div>
               </div>
 

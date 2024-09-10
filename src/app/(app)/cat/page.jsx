@@ -2,14 +2,12 @@
 import { useState, useEffect } from "react";
 // import { useRouter } from "next/router";
 
-export default function IncomeForm() {
-  const [incomeAmount, setIncomeAmount] = useState("");
-  const [incomeType, setIncomeType] = useState("Online");
-  const [incomeDescription, setIncomeDescription] = useState("");
+export default function CategoryForm() {
+  const [outcomeCategory, setOutcomeCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  // const router = useRouter();
+//   const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -20,13 +18,11 @@ export default function IncomeForm() {
     setIsLoading(true);
 
     const data = {
-      income_amount: incomeAmount,
-      income_type: incomeType,
-      income_description: incomeDescription,
+      outcome_category: outcomeCategory,
     };
 
     try {
-      const response = await fetch("/api/set-income", {
+      const response = await fetch("/api/set-category", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,11 +33,9 @@ export default function IncomeForm() {
       if (response.ok) {
         setIsLoading(false);
         setIsSubmitted(true);
-        setIncomeAmount("");
-        setIncomeType("Online");
-        setIncomeDescription("");
+        setOutcomeCategory("");
       } else {
-        console.error("Failed to submit income data");
+        console.error("Failed to submit category data");
         setIsLoading(false);
       }
     } catch (error) {
@@ -59,54 +53,26 @@ export default function IncomeForm() {
       <div className="max-w-md w-full space-y-8">
         {isSubmitted ? (
           <div className="bg-green-100 text-green-800 p-4 rounded-md text-center">
-            <p className="text-lg font-semibold">Income data submitted successfully!</p>
+            <p className="text-lg font-semibold">Category submitted successfully!</p>
           </div>
         ) : (
           <>
-            <h2 className="text-center text-3xl font-extrabold text-gray-900">Submit Income</h2>
+            <h2 className="text-center text-3xl font-extrabold text-gray-900">Submit Outcome Category</h2>
             <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
               <div className="rounded-md shadow-sm -space-y-px">
                 <div>
-                  <label htmlFor="incomeAmount" className="sr-only">
-                    Income Amount
+                  <label htmlFor="outcomeCategory" className="sr-only">
+                    Outcome Category
                   </label>
                   <input
-                    id="incomeAmount"
-                    name="incomeAmount"
-                    type="number"
-                    value={incomeAmount}
-                    onChange={(e) => setIncomeAmount(e.target.value)}
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Income Amount"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="incomeType" className="sr-only">Income Type</label>
-                  <select
-                    id="incomeType"
-                    name="incomeType"
-                    value={incomeType}
-                    onChange={(e) => setIncomeType(e.target.value)}
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  >
-                    <option value="Online">Online</option>
-                      <option value="Cash">Cash</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="incomeDescription" className="sr-only">
-                    Income Description
-                  </label>
-                  <input
-                    id="incomeDescription"
-                    name="incomeDescription"
+                    id="outcomeCategory"
+                    name="outcomeCategory"
                     type="text"
-                    value={incomeDescription}
-                    onChange={(e) => setIncomeDescription(e.target.value)}
+                    value={outcomeCategory}
+                    onChange={(e) => setOutcomeCategory(e.target.value)}
                     required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Income Description"
+                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    placeholder="Outcome Category"
                   />
                 </div>
               </div>
