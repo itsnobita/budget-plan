@@ -50,7 +50,7 @@ export async function GET() {
     try {
      
       const updatedIncome = await outcomeCategoryModel.find(
-        { },
+        { },{outcome_category:1}
         
       );
       if (!updatedIncome) {

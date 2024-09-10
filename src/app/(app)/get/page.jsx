@@ -1,21 +1,44 @@
-'use client'
+"use client";
 
 import { useState, useEffect } from "react";
 // import { useRouter } from "next/router";
 
 export default function OutcomeForm() {
   const [outcomeDescription, setOutcomeDescription] = useState("");
-  const [outcomeCategory, setOutcomeCategory] = useState("fuel");
+  const [outcomeCategory, setOutcomeCategory] = useState("");
   const [outcomeAmount, setOutcomeAmount] = useState("");
-  const [outcomeType, setOutcomeType] = useState("upi");
+  const [outcomeType, setOutcomeType] = useState("UPI");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [isFetchingCategories, setIsFetchingCategories] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
-//   const router = useRouter();
+  //   const router = useRouter();
 
   useEffect(() => {
-    setIsMounted(true);
+      setIsMounted(true);
+      fetchCategories();
   }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("/api/set-category", {
+        method: "GET",
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        const categories = data.result.map((item) => item.outcome_category);
+        setCategories(categories); // Set the categories
+        setIsFetchingCategories(false);
+        setOutcomeCategory(categories[0] || ""); // Set first category as default
+      } else {
+        console.error("Failed to fetch categories");
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      setIsFetchingCategories(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,36 +86,40 @@ export default function OutcomeForm() {
       <div className="max-w-md w-full space-y-8">
         {isSubmitted ? (
           <div className="bg-green-100 text-green-800 p-4 rounded-md text-center">
-            <p className="text-lg font-semibold">Outcome data submitted successfully!</p>
+            <p className="text-lg font-semibold">
+              Outcome data submitted successfully!
+            </p>
           </div>
         ) : (
           <>
-            <h2 className="text-center text-3xl font-extrabold text-gray-900">Submit Outcome</h2>
+            <h2 className="text-center text-3xl font-extrabold text-gray-900">
+              Submit Outcome
+            </h2>
             <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
               <div className="rounded-md shadow-sm -space-y-px">
-                
                 <div>
                   <label htmlFor="outcomeCategory" className="sr-only">
                     Outcome Category
                   </label>
-                  <select
-                    id="outcomeCategory"
-                    name="outcomeCategory"
-                    value={outcomeCategory}
-                    onChange={(e) => setOutcomeCategory(e.target.value)}
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  >
-                    <option value="fuel">Fuel</option>
-                    <option value="food">Food</option>
-                    <option value="drink">Drink</option>
-                    <option value="car">Car</option>
-                    <option value="movie">Movie</option>
-                    <option value="grocery">Grocery</option>
-                    <option value="friend">Friend</option>
-                    <option value="emi">EMI</option>
-                    <option value="invest">Invest</option>
-                    <option value="cash">Cash</option>
-                  </select>
+                  {isFetchingCategories ? (
+                    <p className="text-center text-gray-500">
+                      Loading categories...
+                    </p>
+                  ) : (
+                    <select
+                      id="outcomeCategory"
+                      name="outcomeCategory"
+                      value={outcomeCategory}
+                      onChange={(e) => setOutcomeCategory(e.target.value)}
+                      className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    >
+                      {categories.map((category) => (
+                        <option key={category} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="outcomeAmount" className="sr-only">
@@ -120,9 +147,9 @@ export default function OutcomeForm() {
                     onChange={(e) => setOutcomeType(e.target.value)}
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   >
-                    <option value="card">Card</option>
-                    <option value="upi">UPI</option>
-                    <option value="cash">Cash</option>
+                    <option value="Card">Card</option>
+                    <option value="UPI">UPI</option>
+                    <option value="Cash">Cash</option>
                   </select>
                 </div>
                 <div>
