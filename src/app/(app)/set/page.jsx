@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 // import { useRouter } from "next/router";
 
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 export default function IncomeForm() {
   const [incomeAmount, setIncomeAmount] = useState("");
   const [incomeType, setIncomeType] = useState("Online");
@@ -56,6 +58,7 @@ export default function IncomeForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-6 px-4 sm:px-6 lg:px-8">
+      <SpeedInsights/>
       <div className="max-w-md w-full space-y-8">
         {isSubmitted ? (
           <div className="bg-green-100 text-green-800 p-4 rounded-md text-center">
