@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 // import { useRouter } from "next/router";
 
 export default function OutcomeForm() {
@@ -82,7 +83,8 @@ export default function OutcomeForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-6 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 py-6 px-4 sm:px-6 lg:px-8">
+          <SpeedInsights/>
       <div className="max-w-md w-full space-y-8">
         {isSubmitted ? (
           <div className="bg-green-100 text-green-800 p-4 rounded-md text-center">
